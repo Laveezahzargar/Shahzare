@@ -69,7 +69,7 @@ const FilterSidebar = () => {
         setSearchParams(params)
         navigate(`?${params.toString()}`)
     }
-    const handlePriceChange = (e) => {
+    const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const newPrice = Number(e.target.value);
         setPriceRange([0, newPrice]);
         const newFilters = { ...filters, minPrice: 0, maxPrice: newPrice };

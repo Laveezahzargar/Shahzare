@@ -17,16 +17,16 @@ const PayPalButton = ({ amount, onSuccess, onError }: Props) => {
 
             <PayPalButtons style={{ layout: "vertical" }} createOrder={(_data, actions) => {
                 return actions.order.create({
-                    purchase_units: [
-            {
-    amount: {
-      currency_code: "USD",
-      value: amount.toString()
+  intent: "CAPTURE",
+  purchase_units: [
+    {
+      amount: {
+        currency_code: "USD",
+        value: amount.toString()
+      }
     }
-  }
-]
-                    
-                })
+  ]
+});
             }}
                 onApprove={async (_data, actions) => {
                     const details = await actions.order?.capture();
