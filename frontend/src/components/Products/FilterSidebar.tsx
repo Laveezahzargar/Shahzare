@@ -9,13 +9,13 @@ const FilterSidebar = () => {
         category: "",
         gender: "",
         color: "",
-        size: [],
-        material: [],
-        brand: [],
+        size: [] as string[],
+        material: [] as string[],
+        brand: [] as string[],
         minPrice: 0,
         maxPrice: 100
     })
-    const [priceRange, setPriceRange] = useState([0, 100])
+    const [priceRange, setPriceRange] = useState<[number,number]>([0, 100])
 
     const categories = ["Top Wear", "Bottom Wear"]
     const colors = ["Red", "Blue", "Yellow", "Orange", "Green", "Pink", "Black", "Brown", "Purple", "White", "Gray", "Beige", "Golden", "Silver"]
@@ -34,13 +34,13 @@ const FilterSidebar = () => {
             size: params.size ? params.size.split(",") : [],
             material: params.material ? params.material.split(",") : [],
             brand: params.brand ? params.brand.split(",") : [],
-            minPrice: params.minPrice || 0,
-            maxPrice: params.maxPrice || 100
+            minPrice: Number(params.minPrice) || 0,
+            maxPrice: Number(params.maxPrice) || 100
         });
         setPriceRange([0, params.maxPrice || 100]);
     }, [searchParams])
 
-    const handleFilterChange = (e) => {
+    const handleFilterChange = (e: any) => {
         const { name, value, checked, type } = e.target;
         let newFilters = { ...filters }
         if (type === "checkbox") {
@@ -57,7 +57,7 @@ const FilterSidebar = () => {
         setFilters(newFilters)
         updateURLParams(newFilters)
     }
-    const updateURLParams = (newFilters) => {
+    const updateURLParams = (newFilters: any) => {
         const params = new URLSearchParams()
         Object.keys(newFilters).forEach((key) => {
             if (Array.isArray(newFilters[key]) && newFilters[key].length > 0) {
@@ -70,10 +70,10 @@ const FilterSidebar = () => {
         navigate(`?${params.toString()}`)
     }
     const handlePriceChange = (e) => {
-        const newPrice = e.target.value;
+        const newPrice = Number(e.target.value);
         setPriceRange([0, newPrice]);
         const newFilters = { ...filters, minPrice: 0, maxPrice: newPrice };
-        setFilters(filters);
+        setFilters(newFilters);
         updateURLParams(newFilters);
     }
     return (

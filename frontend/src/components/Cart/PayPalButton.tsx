@@ -17,7 +17,15 @@ const PayPalButton = ({ amount, onSuccess, onError }: Props) => {
 
             <PayPalButtons style={{ layout: "vertical" }} createOrder={(_data, actions) => {
                 return actions.order.create({
-                    purchase_units: [{ currency_code: "USD", amount: { value: amount.toString() } }]
+                    purchase_units: [
+            {
+    amount: {
+      currency_code: "USD",
+      value: amount.toString()
+    }
+  }
+]
+                    
                 })
             }}
                 onApprove={async (_data, actions) => {
