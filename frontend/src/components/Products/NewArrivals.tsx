@@ -114,7 +114,7 @@ const handleMouseDown = (e) => {
     const walk = x - startX;
     scrollRef.current.scrollLeft = scrollLeftStart - walk;
 };
-    const handleMouseUpOrLeave =(e)=>{
+    const handleMouseUpOrLeave =()=>{
         setIsDragging(false)
     }
 

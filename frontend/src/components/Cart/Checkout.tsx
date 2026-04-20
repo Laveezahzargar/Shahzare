@@ -140,7 +140,7 @@ const Checkout = () => {
                             (
                                 <div>
                                     <h3 className="text-lg mb-4">Pay with Paypal</h3>
-                                    <PayPalButton amount={100} onSuccess={handlePaymentSucess} onError={(err) => alert("Payment failed. Try again.")} />
+                                    <PayPalButton amount={100} onSuccess={handlePaymentSucess} onError={(_err) => alert("Payment failed. Try again.")} />
                                 </div>
                             )}
                     </div>
@@ -190,3 +190,4 @@ const Checkout = () => {
 }
 
 export default Checkout
+
