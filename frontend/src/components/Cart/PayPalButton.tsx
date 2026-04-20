@@ -1,19 +1,28 @@
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js"
 
-const PayPalButton = ({amount, onSuccess, onError}) => {
+type Props = {
+    amount: number;
+    onSuccess: (details: any) => void;
+    onError: (err: any) => void;
+};
+
+const PayPalButton = ({ amount, onSuccess, onError }: Props) => {
     return (
         <PayPalScriptProvider options={{
-            "client-id":
-                import.meta.env.VITE_PAYPAL_CLIENT_ID
+            clientId:
+                import.meta.env.VITE_PAYPAL_CLIENT_ID,
+            currency: "USD",
+            intent: "capture"
         }}>
 
-            <PayPalButtons style={{ layout: "vertical" }} createOrder={(data, actions) => {
+            <PayPalButtons style={{ layout: "vertical" }} createOrder={(_data, actions) => {
                 return actions.order.create({
-                    purchase_units: [{ amount: { value: amount } }]
+                    purchase_units: [{ currency_code: "USD", amount: { value: amount.toString() } }]
                 })
             }}
-                onApprove={(data, actions) => {
-                    return actions.order.capture().then(onSuccess)
+                onApprove={async (_data, actions) => {
+                    const details = await actions.order?.capture();
+          if (details) onSuccess(details);
                 }}
                 onError={onError} />
         </PayPalScriptProvider>
@@ -21,3 +30,5 @@ const PayPalButton = ({amount, onSuccess, onError}) => {
 }
 
 export default PayPalButton
+
+
